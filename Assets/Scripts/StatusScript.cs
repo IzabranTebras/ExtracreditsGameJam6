@@ -85,6 +85,6 @@ public class StatusScript : MonoBehaviour
         int seconds = (int)timeElapsed%60;
         int minutes = (int)timeElapsed/60;
 
-        timeText.text = minutes + ":" + seconds.ToString(" 00");
+        timeText.text = "Time  "+minutes + ":" + seconds.ToString("00");
     }
 }
