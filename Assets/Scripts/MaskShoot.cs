@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Skill/BasicShoot", fileName = "BasicShootSkill")]
 public class MaskShoot : AbstractSkill
 {
     [Header("Stats")]
