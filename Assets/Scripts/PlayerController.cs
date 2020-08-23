@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(InputManager))]
 [RequireComponent(typeof(Rigidbody))]
@@ -9,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 5.0f;
     public float rotationSpeed = 5.0f;
     public float jumpForce = 50.0f;
+    public float impulseForce = 5.0f;
 
     [Header("Camera")]
     public Transform cameraPivot = null;
@@ -51,11 +51,11 @@ public class PlayerController : MonoBehaviour
     private void Movement()
     {
         // Reset forces to not accumulate acceleration. In Y axis not applies due gravity reasons
-        _rigidbody.velocity = new Vector3(0.0f, _rigidbody.velocity.y, 0.0f);
+        //_rigidbody.velocity = new Vector3(0.0f, _rigidbody.velocity.y, 0.0f);
 
         // Forces to add in local coordinates
         Vector3 forcesToAdd = (transform.forward * _input.MovementInput.y) + (transform.right * _input.MovementInput.x);
-        _rigidbody.AddForce(forcesToAdd.normalized*speed, ForceMode.Impulse);
+        _rigidbody.AddForce(forcesToAdd.normalized*speed, ForceMode.Force);
     }
 
     private void Rotation()
@@ -105,5 +105,10 @@ public class PlayerController : MonoBehaviour
                 Debug.LogWarning("Skill not set");
             }
         }
+    }
+
+    public void AddImpulse(Transform attacker)
+    {
+        _rigidbody.AddForce(attacker.forward * impulseForce, ForceMode.Impulse);
     }
 }

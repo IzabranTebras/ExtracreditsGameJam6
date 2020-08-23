@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerController))]
 public class StatusScript : MonoBehaviour
 {
 
@@ -9,12 +10,13 @@ public class StatusScript : MonoBehaviour
 
     private int _currentHealth;
     public int currentHealth { get { return _currentHealth; } }
-    // Start is called before the first frame update
 
+    private PlayerController _controller = null;
 
     void Start()
     {
         _currentHealth = maxHealth;
+        _controller = GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -23,9 +25,14 @@ public class StatusScript : MonoBehaviour
 
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount, Transform attackerPosition = null)
     {
         _currentHealth = Mathf.Clamp(_currentHealth - amount, 0, maxHealth);
+
+        if (attackerPosition)
+        {
+            _controller.AddImpulse(attackerPosition);
+        }
     }
 
     public void Heal(int amount)

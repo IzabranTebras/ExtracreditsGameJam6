@@ -13,12 +13,13 @@ public class MaskProjectile : MonoBehaviour
     public int damage = 0;
 
     private Rigidbody _rigid = null;
+    private Tween _lifeTween = null;
 
     private void Awake()
     {
         _rigid = GetComponent<Rigidbody>();
 
-        DOVirtual.DelayedCall(timeToDestroy, () => Destroy(gameObject));
+        _lifeTween = DOVirtual.DelayedCall(timeToDestroy, () => Destroy(gameObject));
     }
 
     private void Update()
@@ -33,6 +34,8 @@ public class MaskProjectile : MonoBehaviour
         {
             other.GetComponent<StatusScript>().TakeDamage(damage);
         }
+
+        _lifeTween.Kill();
         Destroy(gameObject);
     }
 }
