@@ -463,10 +463,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUB
       objectReference: {fileID: 0}
-    - target: {fileID: 8991127593787487543, guid: ff96849087fafca4aa40455aa3fd4b6f, type: 3}
-      propertyPath: maxHealth
-      value: 300
-      objectReference: {fileID: 0}
     - target: {fileID: 8991127594008611238, guid: ff96849087fafca4aa40455aa3fd4b6f, type: 3}
       propertyPath: m_Name
       value: Player

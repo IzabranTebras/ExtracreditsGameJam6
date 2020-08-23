@@ -32,7 +32,7 @@ public class MaskProjectile : MonoBehaviour
     {
         if (other.gameObject.layer == 9)
         {
-            other.GetComponent<StatusScript>().TakeDamage(damage);
+            other.GetComponent<StatusScript>().TakeDamage(damage, transform.forward);
         }
 
         _lifeTween.Kill();

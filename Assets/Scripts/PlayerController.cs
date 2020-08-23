@@ -42,7 +42,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Rotation();
-        CameraRotation();
         Movement();
         Jump();
         ActivateSkill();
@@ -62,12 +61,6 @@ public class PlayerController : MonoBehaviour
     {
         // Rotate the whole player
         transform.Rotate(new Vector3(0.0f, _input.CameraInput.x, 0.0f) * rotationSpeed * Time.fixedDeltaTime);
-    }
-
-    //@TODO: Decidir si poner movimiento en camara o solo rotación de personaje como hay ahora
-    private void CameraRotation()
-    {
-        //cameraPivot.Rotate(new Vector3(_input.CameraInput.y, 0.0f, 0.0f) * cameraSpeedInXRotation * Time.deltaTime);
     }
 
     private void Jump()
@@ -107,8 +100,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void AddImpulse(Transform attacker)
+    public void AddImpulse(Vector3 attackerForward)
     {
-        _rigidbody.AddForce(attacker.forward * impulseForce, ForceMode.Impulse);
+        _rigidbody.AddForce(attackerForward * impulseForce, ForceMode.Impulse);
     }
 }

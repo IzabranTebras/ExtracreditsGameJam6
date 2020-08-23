@@ -23,7 +23,7 @@ public class AIController : MonoBehaviour
     {
         if(collision.gameObject.layer == 10)
         {
-            collision.gameObject.GetComponent<StatusScript>().TakeDamage(damage, transform);
+            collision.gameObject.GetComponent<StatusScript>().TakeDamage(damage, transform.forward);
         }
     }
 }
