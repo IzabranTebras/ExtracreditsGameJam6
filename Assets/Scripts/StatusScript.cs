@@ -18,13 +18,16 @@ public class StatusScript : MonoBehaviour
     private int currentHealth;
     private float lastTimeValue;
     // Start is called before the first frame update
+
+
     void Start()
     {
         currentHealth = maxHealth;
-        if (slider != null)
-        {
-            slider.maxValue = maxHealth;
-        }
+
+        slider.maxValue = maxHealth;
+        UpdateTimeText();
+        UpdateSlider();
+        UpdateScoreText();
     }
 
     // Update is called once per frame
