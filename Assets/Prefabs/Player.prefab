@@ -601,9 +601,8 @@ GameObject:
   - component: {fileID: 1894023018}
   - component: {fileID: 1894023017}
   - component: {fileID: 8991127593787487549}
-  - component: {fileID: 1273496535946100099}
   m_Layer: 0
-  m_Name: HUD
+  m_Name: HUB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -693,25 +692,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
 --- !u!114 &8991127593787487549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1894023015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb1e853419eac1c4682d3a0e2e052151, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerStatus: {fileID: 8991127593787487543}
-  playerController: {fileID: 8991127594008611233}
-  slider: {fileID: 1461660751}
-  timeText: {fileID: 352815632}
-  scoreText: {fileID: 97583556}
-  ammoText: {fileID: 1678657580}
-  ammoImage: {fileID: 492767115}
---- !u!114 &1273496535946100099
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1116,10 +1096,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c61c751dc941a0a449388ecd61a866f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 0.3
   rotationSpeed: 100
   jumpForce: 7
-  impulseForce: 15
+  impulseForce: 20
+  impulseFreezeTime: 1
   cameraPivot: {fileID: 8991127594300670952}
   cameraSpeedInXRotation: 50
   shootPosition: {fileID: 7983714703413934238}

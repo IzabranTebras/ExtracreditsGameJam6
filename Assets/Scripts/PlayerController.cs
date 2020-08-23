@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 [RequireComponent(typeof(InputManager))]
 [RequireComponent(typeof(Rigidbody))]
@@ -9,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed = 5.0f;
     public float jumpForce = 50.0f;
     public float impulseForce = 5.0f;
+    public float impulseFreezeTime = 3.0f;
 
     [Header("Camera")]
     public Transform cameraPivot = null;
@@ -26,6 +28,8 @@ public class PlayerController : MonoBehaviour
     [Header("Jump")]
     public LayerMask floorLayer;
     public float distanceToGroundForJump = 0.3f;
+
+    private bool impulsed = false;
 
 
     private void Awake()
@@ -49,12 +53,14 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
+        if (impulsed) return;
         // Reset forces to not accumulate acceleration. In Y axis not applies due gravity reasons
-        //_rigidbody.velocity = new Vector3(0.0f, _rigidbody.velocity.y, 0.0f);
+        _rigidbody.velocity = new Vector3(0.0f, _rigidbody.velocity.y, 0.0f);
 
         // Forces to add in local coordinates
         Vector3 forcesToAdd = (transform.forward * _input.MovementInput.y) + (transform.right * _input.MovementInput.x);
-        _rigidbody.AddForce(forcesToAdd.normalized*speed, ForceMode.Force);
+        //_rigidbody.AddForce(forcesToAdd.normalized*speed, ForceMode.Force);
+        _rigidbody.MovePosition(transform.position + (forcesToAdd.normalized * speed));
     }
 
     private void Rotation()
@@ -103,5 +109,7 @@ public class PlayerController : MonoBehaviour
     public void AddImpulse(Vector3 attackerForward)
     {
         _rigidbody.AddForce(attackerForward * impulseForce, ForceMode.Impulse);
+        impulsed = true;
+        DOVirtual.DelayedCall(impulseFreezeTime, () => impulsed = false);
     }
 }
