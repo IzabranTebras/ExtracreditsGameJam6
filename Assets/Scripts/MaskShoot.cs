@@ -34,18 +34,18 @@ public class MaskShoot : AbstractSkill
 
     private void Shoot(PlayerController controller)
     {
-        GameObject maskGO = Instantiate(projectile, controller.shootPosition.position, Quaternion.identity);
+        GameObject maskGO = Instantiate(projectile, controller.shootPosition.position, controller.shootPosition.rotation);
         MaskProjectile maskProjectile = maskGO.GetComponent<MaskProjectile>();
         maskProjectile.speed = projectileSpeed;
         --currentProjectiles;
 
         if(currentProjectiles <= 0)
         {
-            DOVirtual.DelayedCall(delayBetweenProjectiles, () => Shoot(controller));
+            DOVirtual.DelayedCall(cadency, Deactivate);
         }
         else
         {
-            DOVirtual.DelayedCall(cadency, Deactivate);
+            DOVirtual.DelayedCall(delayBetweenProjectiles, () => Shoot(controller));
         }
     }
 }

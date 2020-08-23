@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 [RequireComponent(typeof(InputManager))]
 [RequireComponent(typeof(Rigidbody))]
@@ -16,13 +17,23 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rigidbody = null;
     private InputManager _input = null;
 
-    [Header("Shooting")]
+    [Header("Skills")]
     public Transform shootPosition = null;
+    public AbstractSkill skillAssociated = null;
+
+    [Header("Jump")]
+    public LayerMask floorLayer;
+    public float distanceToGroundForJump = 0.3f;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _input = GetComponent<InputManager>();
+
+        if (skillAssociated)
+        {
+            skillAssociated.Init();
+        }
     }
 
     private void Update()
@@ -31,6 +42,7 @@ public class PlayerController : MonoBehaviour
         CameraRotation();
         Movement();
         Jump();
+        ActivateSkill();
     }
 
     private void Movement()
@@ -57,9 +69,34 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        if (_input.JumpInput)
+        if (_input.JumpInput && IsGrounded())
         {
             _rigidbody.AddForce(transform.up*jumpForce, ForceMode.Impulse);
+        }
+    }
+
+    private bool IsGrounded()
+    {
+        if(Physics.Raycast(transform.position, -Vector3.up, distanceToGroundForJump, floorLayer))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void ActivateSkill()
+    {
+        if (_input.FireInput)
+        {
+            if (skillAssociated)
+            {
+                skillAssociated.Activate(this);
+            }
+            else
+            {
+                Debug.LogWarning("Skill not set");
+            }
         }
     }
 }
