@@ -18,12 +18,15 @@ public class PlayerController : MonoBehaviour
     private InputManager _input = null;
 
     [Header("Skills")]
+    private int _currentAmmo = 20;
+    public int currentAmmo { get => _currentAmmo;}
     public Transform shootPosition = null;
     public AbstractSkill skillAssociated = null;
 
     [Header("Jump")]
     public LayerMask floorLayer;
     public float distanceToGroundForJump = 0.3f;
+
 
     private void Awake()
     {
@@ -91,7 +94,11 @@ public class PlayerController : MonoBehaviour
         {
             if (skillAssociated)
             {
-                skillAssociated.Activate(this);
+                if(_currentAmmo>0 && !skillAssociated.Activated)
+                {
+                    skillAssociated.Activate(this);
+                    _currentAmmo--;
+                }
             }
             else
             {
