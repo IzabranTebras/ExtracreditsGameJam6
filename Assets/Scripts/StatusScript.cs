@@ -43,21 +43,13 @@ public class StatusScript : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        currentHealth -= amount;
-        if(currentHealth <0)
-        {
-            currentHealth = 0;
-        }
+        currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
         UpdateSlider();
     }
 
     public void Heal(int amount)
     {
-        currentHealth += amount;
-        if(currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         UpdateSlider();
     }
 

@@ -37,6 +37,7 @@ public class MaskShoot : AbstractSkill
         GameObject maskGO = Instantiate(projectile, controller.shootPosition.position, controller.shootPosition.rotation);
         MaskProjectile maskProjectile = maskGO.GetComponent<MaskProjectile>();
         maskProjectile.speed = projectileSpeed;
+        maskProjectile.damage = damage;
         --currentProjectiles;
 
         if(currentProjectiles <= 0)

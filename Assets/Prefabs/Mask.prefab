@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3203890863807885872}
   - component: {fileID: 2356985766835143118}
   - component: {fileID: 838887744778631915}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b1b4143cdea1c4aa4e486c04cc21e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToDestroy: 4
 --- !u!1001 &8891547530109364965
 PrefabInstance:
   m_ObjectHideFlags: 0

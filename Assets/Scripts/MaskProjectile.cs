@@ -1,19 +1,24 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class MaskProjectile : MonoBehaviour
 {
+    public float timeToDestroy = 4.0f;
+
     [NonSerialized]
     public float speed = 0.0f;
     [NonSerialized]
-    public float damage = 0.0f;
+    public int damage = 0;
 
     private Rigidbody _rigid = null;
 
     private void Awake()
     {
         _rigid = GetComponent<Rigidbody>();
+
+        DOVirtual.DelayedCall(timeToDestroy, () => Destroy(gameObject));
     }
 
     private void Update()
@@ -24,6 +29,10 @@ public class MaskProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.gameObject.layer == 9)
+        {
+            other.GetComponent<StatusScript>().TakeDamage(damage);
+        }
+        Destroy(gameObject);
     }
 }
