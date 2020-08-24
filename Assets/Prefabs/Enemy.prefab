@@ -126,8 +126,8 @@ GameObject:
   - component: {fileID: 76371470612120278}
   - component: {fileID: 7751722320033640531}
   - component: {fileID: 2810203219263827039}
-  - component: {fileID: 5635640565628435221}
   - component: {fileID: 6803764920280580363}
+  - component: {fileID: 328717152352496431}
   m_Layer: 0
   m_Name: ToxicArea
   m_TagString: Untagged
@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 8893152570459930234}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2.4, z: 0}
-  m_LocalScale: {x: 6, y: 1.8505417, z: 6}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_Children: []
   m_Father: {fileID: 7363903037791286729}
   m_RootOrder: 1
@@ -156,7 +156,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8893152570459930234}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &2810203219263827039
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -198,20 +198,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5635640565628435221
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8893152570459930234}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!114 &6803764920280580363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +210,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e35155afbd367cb4e96a3e1a79466c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &328717152352496431
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8893152570459930234}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: -0.000000029802322, z: 0}
 --- !u!1001 &7363903038049407800
 PrefabInstance:
   m_ObjectHideFlags: 0
