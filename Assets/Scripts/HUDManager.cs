@@ -18,17 +18,22 @@ public class HUDManager : MonoBehaviour
 
     public Image ammoImage;
 
+    public SaveLoad saveLoad;
+
     private int score;
     private float timeElapsed;
     private float lastTimeValue;
     private int sliderHealth;
     private int hubAmmo;
     private bool timerStop;
+    private bool saved;
+
     public float TimeElapsed { get => timeElapsed;}
     public int Score { get => score;}
 
     void Start()
     {
+        saved = false;
 
         slider.maxValue = playerStatus.maxHealth;
         UpdateTimeText();
@@ -40,11 +45,14 @@ public class HUDManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeElapsed += Time.deltaTime;
-        if (timeElapsed - lastTimeValue > 1) //only update time if there is a change in value
+        if(!timerStop)
         {
-            UpdateTimeText();
-            lastTimeValue = timeElapsed;
+            timeElapsed += Time.deltaTime;
+            if (timeElapsed - lastTimeValue > 1) //only update time if there is a change in value
+            {
+                UpdateTimeText();
+                lastTimeValue = timeElapsed;
+            }
         }
 
         if(sliderHealth != playerStatus.currentHealth)
@@ -83,7 +91,6 @@ public class HUDManager : MonoBehaviour
     private void UpdateTimeText()
     {
         if (timeText == null) return;
-        if (timerStop) return;
         timeText.text = "Time: "+getTimeString();
     }
 
@@ -112,6 +119,12 @@ public class HUDManager : MonoBehaviour
         message.SetActive(true);
         
         textMessage.text = "Score:\t" + Score.ToString("0000") + "\nTime\t" + getTimeString();
+        if (!saved)
+        {
+            saveLoad.AddHighscore(new HighScore("Player1", Score.ToString("0000"), getTimeString()));
+            saved = true;
+        }
+
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
