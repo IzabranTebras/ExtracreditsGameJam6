@@ -7,7 +7,7 @@ public class AIController : MonoBehaviour
     public int damage = 10;
 
     private NavMeshAgent _agent = null;
-    private PlayerController _player = null;
+    //private PlayerController _player = null;
 
     private void Awake()
     {

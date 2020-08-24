@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawnerManager : MonoBehaviour
 {
-    static public int enemyNumber;
-    static int currenMaxEnemies;
-    static int MAX_ENEMIES_EASY = 20;
-    static int MAX_ENEMIES_HARD = 150;
+    public Transform[] spawnPoints;
+
+    int currenMaxEnemies;
+    int MAX_ENEMIES_EASY = 20;
+    int MAX_ENEMIES_HARD = 150;
 
     public GameObject enemyPrefab;
 
-    public static float maxSpawnTime = 15f;
-    public static float minSpawnTime = 0.1f;
-    public static float variability = 0.2f; // % of variability to make a little random
+    static float maxSpawnTime = 1f;
+    static float minSpawnTime = 0.05f;
+    static float variability = 0.2f; // % of variability to make a little random
 
-    static float timeMaxDiff = 600;     // max dificult at 10 minutes (600 s)
+    float timeMaxDiff = 600;     // max difficulty at 10 minutes (600 s)
 
+    int enemyNumber;
     private float timer;
 
     void Start()
@@ -29,12 +31,14 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         timer -= Time.deltaTime;
-        if(timer < 0)
+        if (timer < 0)
         {
             currenMaxEnemies = CalculateMaxEnemies();
             if (CanSpawn())
             {
-                Instantiate(enemyPrefab, transform.position, transform.rotation);
+                int index = Random.Range(0, spawnPoints.Length - 1);
+                Vector3 position = spawnPoints[index].position;
+                Instantiate(enemyPrefab, position, new Quaternion(0,0,0,0));
                 enemyNumber++;
                 timer = CalculateSpawnTime();
             }
@@ -52,14 +56,14 @@ public class EnemySpawner : MonoBehaviour
     private int CalculateMaxEnemies()
     {
         float timeElapsed = FindObjectOfType<HUDManager>().TimeElapsed;
-        return (int) Mathf.Lerp(MAX_ENEMIES_EASY, MAX_ENEMIES_HARD, timeElapsed / timeMaxDiff);
+        return (int)Mathf.Lerp(MAX_ENEMIES_EASY, MAX_ENEMIES_HARD, timeElapsed / timeMaxDiff);
     }
-    public static void Reset()
+    public void Reset()
     {
         currenMaxEnemies = 0;
     }
 
-    private static bool CanSpawn()
+    private bool CanSpawn()
     {
         if (enemyNumber >= currenMaxEnemies) return false;
 

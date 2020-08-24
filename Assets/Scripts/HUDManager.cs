@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUBManager : MonoBehaviour
+public class HUDManager : MonoBehaviour
 {
     public StatusScript playerStatus;
     public PlayerController playerController;
+    
+    public GameObject message;
+    public Text textMessage;
 
     public Slider slider;
     public Text timeText;
@@ -20,6 +23,9 @@ public class HUBManager : MonoBehaviour
     private float lastTimeValue;
     private int sliderHealth;
     private int hubAmmo;
+
+    public float TimeElapsed { get => timeElapsed;}
+    public int Score { get => score;}
 
     void Start()
     {
@@ -77,15 +83,37 @@ public class HUBManager : MonoBehaviour
     private void UpdateTimeText()
     {
         if (timeText == null) return;
-        int seconds = (int)timeElapsed % 60;
-        int minutes = (int)timeElapsed / 60;
 
-        timeText.text = "Time  " + minutes + ":" + seconds.ToString("00");
+        timeText.text = "Time: "+getTimeString();
     }
 
     private void UpdateAmmoText()
     {
         if (ammoText == null) return;
         ammoText.text = playerController.currentAmmo.ToString("00");
+    }
+
+
+    public void ChangeAmmoImage(Sprite sprite)
+    {
+        ammoImage.sprite = sprite;
+    }
+
+    public string getTimeString()
+    {
+        int seconds = (int)timeElapsed % 60;
+        int minutes = (int)timeElapsed / 60;
+        return + minutes + ":" + seconds.ToString("00");
+    }
+
+    public void GameOver()
+    {
+        message.SetActive(true);
+        
+        textMessage.text = "Score:\t" + Score.ToString("0000") + "\nTime\t" + getTimeString();
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        EnemySpawner.Reset();   //needed if player wants to restart the game
     }
 }
