@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
 public class StatusScript : MonoBehaviour
@@ -11,12 +12,26 @@ public class StatusScript : MonoBehaviour
 
     private PlayerController _controller = null;
 
+    bool invulnerable;
+    float invulnerableTimer;
+    float invAfterHit = 1f; //invulnerability for 1 second after a hit;
     void Awake()
     {
         _currentHealth = maxHealth;
         _controller = GetComponent<PlayerController>();
     }
 
+    private void Update()
+    {
+        if (invulnerable)
+        {
+            invulnerableTimer -= Time.deltaTime;
+            if (invulnerableTimer < 0)
+            {
+                invulnerable = false;
+            }
+        }
+    }
     public void TakeDamage(int amount, Vector3 attackerForward)
     {
         if(_controller) _controller.AddImpulse(attackerForward);
@@ -25,10 +40,15 @@ public class StatusScript : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        if (invulnerable && amount < 100) return;   //if damage is too big (deathfloor) invulnebility dont work
         _currentHealth = Mathf.Clamp(_currentHealth - amount, 0, maxHealth);
         if(_currentHealth == 0)
         {
             Death();
+        }
+        else
+        {
+            setInvulnerable(invAfterHit);
         }
     }
 
@@ -43,11 +63,18 @@ public class StatusScript : MonoBehaviour
         {
             Destroy(gameObject);
             EnemySpawner.enemyNumber--;
+            FindObjectOfType<HUDManager>().IncreaseScore(1);
         }
         else
         {
-            //@todo gameover
+            FindObjectOfType<HUDManager>().GameOver();
         }
+    }
+
+    internal void setInvulnerable(float time)
+    {
+        invulnerable= true;
+        invulnerableTimer = time;
     }
 }
 

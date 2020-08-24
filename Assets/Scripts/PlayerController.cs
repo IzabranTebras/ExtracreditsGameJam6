@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(InputManager))]
@@ -7,6 +8,8 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Stats")]
     public float speed = 5.0f;
+    float bonusSpeed;
+    float bonusSpeedTimer;
     public float rotationSpeed = 5.0f;
     public float jumpForce = 50.0f;
     public float impulseForce = 5.0f;
@@ -23,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private int _currentAmmo = 20;
     public int currentAmmo { get => _currentAmmo; set { _currentAmmo = Mathf.Clamp(value, 0, 99); } }
     public Transform shootPosition = null;
+
     public AbstractSkill skillAssociated = null;
 
     [Header("Jump")]
@@ -30,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public float distanceToGroundForJump = 0.3f;
 
     private bool impulsed = false;
-
+    private Transform respawnPoint;
 
     private void Awake()
     {
@@ -49,6 +53,16 @@ public class PlayerController : MonoBehaviour
         Movement();
         Jump();
         ActivateSkill();
+
+        if(bonusSpeed!=0)
+        {
+            bonusSpeedTimer -= Time.deltaTime;
+            if(bonusSpeedTimer < 0)
+            {
+                bonusSpeed = 0;
+            }
+        }
+
     }
 
     private void Movement()
@@ -60,7 +74,8 @@ public class PlayerController : MonoBehaviour
         // Forces to add in local coordinates
         Vector3 forcesToAdd = (transform.forward * _input.MovementInput.y) + (transform.right * _input.MovementInput.x);
         //_rigidbody.AddForce(forcesToAdd.normalized*speed, ForceMode.Force);
-        _rigidbody.MovePosition(transform.position + (forcesToAdd.normalized * speed));
+        float totalSpeed = speed + bonusSpeed;
+        _rigidbody.MovePosition(transform.position + (forcesToAdd.normalized * totalSpeed));
     }
 
     private void Rotation()
@@ -112,4 +127,31 @@ public class PlayerController : MonoBehaviour
         impulsed = true;
         DOVirtual.DelayedCall(impulseFreezeTime, () => impulsed = false);
     }
+
+    internal void IncreaseSpeed(float bonusSpeed, float duration)
+    {
+        this.bonusSpeed = bonusSpeed;
+        bonusSpeedTimer = duration;
+    }
+
+
+    internal void AddAmmo(int ammo, AbstractSkill newSkill)
+    {
+        if(skillAssociated == newSkill)
+        {
+            currentAmmo += 10;
+        }
+        else
+        {
+            skillAssociated = newSkill;
+            currentAmmo = 10;
+        }
+    }
+
+    public void StopPhysics()
+    {
+
+    }
+
+
 }
