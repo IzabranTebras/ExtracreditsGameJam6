@@ -1142,7 +1142,7 @@ GameObject:
   - component: {fileID: 1790794807}
   - component: {fileID: 1790794806}
   m_Layer: 5
-  m_Name: HighScore (1)
+  m_Name: Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1180,7 +1180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae156e6372623f4083c3d5dbf4d1845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 4
+  id: 5
 --- !u!114 &1790794807
 MonoBehaviour:
   m_ObjectHideFlags: 0
