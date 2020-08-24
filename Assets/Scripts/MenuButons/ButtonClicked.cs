@@ -10,7 +10,9 @@ public class ButtonClicked: MonoBehaviour
     {
         PLAY = 0,
         INSTRUCTIONS,
-        HIGHSCORE
+        HIGHSCORE,
+        MAINMENU,
+        QUIT
     }
 
     public buttonId id;
@@ -31,12 +33,22 @@ public class ButtonClicked: MonoBehaviour
                 }
             case buttonId.INSTRUCTIONS:
                 {
-                    // SceneManager.LoadSceneAsync(1);       //@TODO crear escena de instrucciones
+                    SceneManager.LoadSceneAsync(2);
                     break;
                 }
             case buttonId.HIGHSCORE:
                 {
-                    // SceneManager.LoadSceneAsync(1);       //@TODO crear escena de puntuaciones
+                    SceneManager.LoadSceneAsync(3);
+                    break;
+                }
+            case buttonId.MAINMENU:
+                {
+                    SceneManager.LoadSceneAsync(0);
+                    break;
+                }
+            case buttonId.QUIT:
+                {
+                    Application.Quit();
                     break;
                 }
             default:
