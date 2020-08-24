@@ -19,18 +19,35 @@ public class StatusScript : MonoBehaviour
 
     public void TakeDamage(int amount, Vector3 attackerForward)
     {
-        _controller.AddImpulse(attackerForward);
+        if(_controller) _controller.AddImpulse(attackerForward);
         TakeDamage(amount);
     }
 
     public void TakeDamage(int amount)
     {
         _currentHealth = Mathf.Clamp(_currentHealth - amount, 0, maxHealth);
+        if(_currentHealth == 0)
+        {
+            Death();
+        }
     }
 
     public void Heal(int amount)
     {
         _currentHealth = Mathf.Clamp(_currentHealth + amount, 0, maxHealth);
+    }
+
+    private void Death()
+    {
+        if(gameObject.layer == 9)
+        {
+            Destroy(gameObject);
+            EnemySpawner.enemyNumber--;
+        }
+        else
+        {
+            //@todo gameover
+        }
     }
 }
 

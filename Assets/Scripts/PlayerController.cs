@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Skills")]
     private int _currentAmmo = 20;
-    public int currentAmmo { get => _currentAmmo;}
+    public int currentAmmo { get => _currentAmmo; set { _currentAmmo = Mathf.Clamp(value, 0, 99); } }
     public Transform shootPosition = null;
     public AbstractSkill skillAssociated = null;
 

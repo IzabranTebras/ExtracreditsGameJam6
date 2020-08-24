@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: MultipleShootSkill
   m_EditorClassIdentifier: 
   damage: 5
-  cadency: 1
-  projectilesPerShot: 20
-  delayBetweenProjectiles: 0.1
+  cadency: 0.5
+  projectilesPerShot: 5
+  delayBetweenProjectiles: 0.05
   projectile: {fileID: 7259223990623814577, guid: c4fb44109c5af624cb46a8b551d525d0, type: 3}
   projectileSpeed: 20
