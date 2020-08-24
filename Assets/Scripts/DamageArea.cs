@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class DamageArea : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    int damage = 1;
+    bool damageEnabled = true;
 
-    // Update is called once per frame
-    void Update()
+    float timer;
+    float damageTime = 0.2f;
+
+    private void Update()
     {
-        
+        if(!damageEnabled)
+        {
+            timer += Time.deltaTime;
+            if(timer>damageTime)
+            {
+                damageEnabled = true;
+                timer = 0;
+            }
+        }
+    }
+    private void OnTriggerStay(Collider collision)
+    {
+        if (collision.gameObject.layer == 10)
+        {
+            if(damageEnabled)
+            {
+               collision.gameObject.GetComponent<StatusScript>().TakeDamage(damage);
+                damageEnabled = false;
+            }
+        }
     }
 }

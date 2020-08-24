@@ -23,7 +23,7 @@ public class HUDManager : MonoBehaviour
     private float lastTimeValue;
     private int sliderHealth;
     private int hubAmmo;
-
+    private bool timerStop;
     public float TimeElapsed { get => timeElapsed;}
     public int Score { get => score;}
 
@@ -83,7 +83,7 @@ public class HUDManager : MonoBehaviour
     private void UpdateTimeText()
     {
         if (timeText == null) return;
-
+        if (timerStop) return;
         timeText.text = "Time: "+getTimeString();
     }
 
@@ -108,6 +108,7 @@ public class HUDManager : MonoBehaviour
 
     public void GameOver()
     {
+        timerStop = true;
         message.SetActive(true);
         
         textMessage.text = "Score:\t" + Score.ToString("0000") + "\nTime\t" + getTimeString();

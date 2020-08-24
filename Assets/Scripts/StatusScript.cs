@@ -14,7 +14,7 @@ public class StatusScript : MonoBehaviour
 
     bool invulnerable;
     float invulnerableTimer;
-    float invAfterHit = 1f; //invulnerability for 1 second after a hit;
+    float invAfterHit = 0.5f; //invulnerability for 1 second after a hit;
     void Awake()
     {
         _currentHealth = maxHealth;
@@ -46,10 +46,6 @@ public class StatusScript : MonoBehaviour
         {
             Death();
         }
-        else
-        {
-            setInvulnerable(invAfterHit);
-        }
     }
 
     public void Heal(int amount)
@@ -68,6 +64,7 @@ public class StatusScript : MonoBehaviour
         else
         {
             FindObjectOfType<HUDManager>().GameOver();
+            _controller.GetComponent<Rigidbody>().isKinematic = true;
         }
     }
 
