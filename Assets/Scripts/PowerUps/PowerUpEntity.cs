@@ -5,23 +5,12 @@ using UnityEngine;
 public class PowerUpEntity : MonoBehaviour
 {
     public PowerUpManager.PowerUpID powerUpID;
-    public float respawnTime = 30f;
-    float respawnTimer;
+    public float rotationSpeed = 25f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        respawnTimer -= Time.deltaTime;
-        if(respawnTimer<0)
-        {
-            Respawn();
-        }
+        transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,15 +18,9 @@ public class PowerUpEntity : MonoBehaviour
         if (other.gameObject.layer == 10)
         {
             FindObjectOfType<PowerUpManager>().PowerUpAction(powerUpID);
-            gameObject.SetActive(false);
-            respawnTimer = respawnTime;
+            GetComponentInParent<PowerUpSpawner>().setRespawnTime();
+            Destroy(gameObject);
         }
 
-    }
-
-    private void Respawn()
-    {
-        powerUpID = (PowerUpManager.PowerUpID) Random.Range((int)PowerUpManager.PowerUpID.Normal, (int)PowerUpManager.PowerUpID.Speed);
-        gameObject.SetActive(true);
     }
 }
