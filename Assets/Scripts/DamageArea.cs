@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class DamageArea : MonoBehaviour
 {
-    int damage = 1;
+    public int damage = 1;
     bool damageEnabled = true;
 
     float timer;
     float damageTime = 0.2f;
+    private StatusScript parentStatus = null;
+
+    private void Awake()
+    {
+        parentStatus = transform.parent.GetComponent<StatusScript>();
+    }
 
     private void Update()
     {
@@ -26,10 +32,10 @@ public class DamageArea : MonoBehaviour
     {
         if (collision.gameObject.layer == 10)
         {
-            if(damageEnabled)
+            if(damageEnabled && parentStatus.currentHealth > 0)
             {
                collision.gameObject.GetComponent<StatusScript>().TakeDamage(damage);
-                damageEnabled = false;
+               damageEnabled = false;
             }
         }
     }
