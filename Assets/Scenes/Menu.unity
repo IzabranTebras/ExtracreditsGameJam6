@@ -956,7 +956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae156e6372623f4083c3d5dbf4d1845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 2
+  id: 3
 --- !u!1 &1676069941
 GameObject:
   m_ObjectHideFlags: 0
@@ -1477,9 +1477,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Social Distance
+  m_Text: '2 meters,
 
-    Simulator'
+    Please'
 --- !u!222 &1955675695
 CanvasRenderer:
   m_ObjectHideFlags: 0

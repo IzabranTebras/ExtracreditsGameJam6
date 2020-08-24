@@ -9,7 +9,8 @@ public class ButtonClicked: MonoBehaviour
     public enum buttonId
     {
         PLAY = 0,
-        INSTRUCTIONS,
+        INSTRUCTIONS1,
+        INSTRUCTIONS2,
         HIGHSCORE,
         MAINMENU,
         QUIT
@@ -31,7 +32,12 @@ public class ButtonClicked: MonoBehaviour
                     SceneManager.LoadSceneAsync(1);
                     break;
                 }
-            case buttonId.INSTRUCTIONS:
+            case buttonId.INSTRUCTIONS1:
+                {
+                    SceneManager.LoadSceneAsync(4);
+                    break;
+                }
+            case buttonId.INSTRUCTIONS2:
                 {
                     SceneManager.LoadSceneAsync(2);
                     break;
