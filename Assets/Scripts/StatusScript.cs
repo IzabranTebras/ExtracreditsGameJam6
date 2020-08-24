@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
@@ -6,11 +7,19 @@ public class StatusScript : MonoBehaviour
 {
 
     public int maxHealth = 10;
+    public float timeToDestroyAfterDeath = 1.0f;
+
+    [Header("FX")]
+    public ParticleSystem deathFX = null;
+    public ParticleSystem impactFX = null;
+    public ParticleSystem invulnerableFX = null;
+    public float timeToDestroyFX = 5.0f;
 
     private int _currentHealth;
     public int currentHealth { get { return _currentHealth; } }
 
     private PlayerController _controller = null;
+    private AIController _aiController = null;
 
     bool invulnerable;
     float invulnerableTimer;
@@ -19,6 +28,7 @@ public class StatusScript : MonoBehaviour
     {
         _currentHealth = maxHealth;
         _controller = GetComponent<PlayerController>();
+        _aiController = GetComponent<AIController>();
     }
 
     private void Update()
@@ -29,6 +39,7 @@ public class StatusScript : MonoBehaviour
             if (invulnerableTimer < 0)
             {
                 invulnerable = false;
+                invulnerableFX.Stop();
             }
         }
     }
@@ -46,6 +57,10 @@ public class StatusScript : MonoBehaviour
         {
             Death();
         }
+        else
+        {
+            impactFX.Play();
+        }
     }
 
     public void Heal(int amount)
@@ -55,11 +70,16 @@ public class StatusScript : MonoBehaviour
 
     private void Death()
     {
-        if(gameObject.layer == 9)
+        deathFX.transform.parent = null;
+        deathFX.Play();
+        Destroy(deathFX.gameObject, timeToDestroyFX);
+
+        if (gameObject.layer == 9)
         {
-            Destroy(gameObject);
+            _aiController.Death();
+            Destroy(gameObject, timeToDestroyAfterDeath);
             EnemySpawner.enemyNumber--;
-            FindObjectOfType<HUDManager>().IncreaseScore(1);
+            FindObjectOfType<HUDManager>().IncreaseScore(5);
         }
         else
         {
@@ -72,6 +92,7 @@ public class StatusScript : MonoBehaviour
     {
         invulnerable= true;
         invulnerableTimer = time;
+        invulnerableFX.Play();
     }
 }
 

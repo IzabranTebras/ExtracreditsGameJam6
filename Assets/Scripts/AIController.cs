@@ -7,7 +7,6 @@ public class AIController : MonoBehaviour
     public int damage = 10;
 
     private NavMeshAgent _agent = null;
-    //private PlayerController _player = null;
 
     private void Awake()
     {
@@ -25,5 +24,11 @@ public class AIController : MonoBehaviour
         {
             collision.gameObject.GetComponent<StatusScript>().TakeDamage(damage, transform.forward);
         }
+    }
+
+    public void Death()
+    {
+        _agent.isStopped = true;
+        _agent.SetDestination(transform.position);
     }
 }
