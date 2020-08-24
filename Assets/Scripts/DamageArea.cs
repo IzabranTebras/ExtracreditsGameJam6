@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DamageArea : MonoBehaviour
 {
-    int damage = 1;
+    public int damage = 1;
     bool damageEnabled = true;
 
     float timer;
@@ -29,7 +29,7 @@ public class DamageArea : MonoBehaviour
             if(damageEnabled)
             {
                collision.gameObject.GetComponent<StatusScript>().TakeDamage(damage);
-                damageEnabled = false;
+               damageEnabled = false;
             }
         }
     }

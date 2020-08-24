@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(InputManager))]
@@ -33,8 +32,10 @@ public class PlayerController : MonoBehaviour
     public LayerMask floorLayer;
     public float distanceToGroundForJump = 0.3f;
 
+    [Header("SFX")]
+    public AudioSource maskThrowSFX = null;
+
     private bool impulsed = false;
-    private Transform respawnPoint;
 
     private void Awake()
     {
@@ -112,6 +113,7 @@ public class PlayerController : MonoBehaviour
                 {
                     skillAssociated.Activate(this);
                     _currentAmmo--;
+                    maskThrowSFX.Play();
                 }
             }
             else

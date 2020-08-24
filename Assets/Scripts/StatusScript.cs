@@ -15,6 +15,11 @@ public class StatusScript : MonoBehaviour
     public ParticleSystem invulnerableFX = null;
     public float timeToDestroyFX = 5.0f;
 
+    [Header("SFX")]
+    public AudioSource deathSFX = null;
+    public AudioSource impactSFX = null;
+    public AudioSource invulnerableSFX = null;
+
     private int _currentHealth;
     public int currentHealth { get { return _currentHealth; } }
 
@@ -24,11 +29,14 @@ public class StatusScript : MonoBehaviour
     bool invulnerable;
     float invulnerableTimer;
     float invAfterHit = 0.5f; //invulnerability for 1 second after a hit;
+    private Collider _coll = null;
+
     void Awake()
     {
         _currentHealth = maxHealth;
         _controller = GetComponent<PlayerController>();
         _aiController = GetComponent<AIController>();
+        _coll = GetComponent<Collider>();
     }
 
     private void Update()
@@ -40,17 +48,22 @@ public class StatusScript : MonoBehaviour
             {
                 invulnerable = false;
                 invulnerableFX.Stop();
+                invulnerableSFX.Stop();
             }
         }
     }
     public void TakeDamage(int amount, Vector3 attackerForward)
     {
+        if (currentHealth <= 0) return;
+
         if(_controller) _controller.AddImpulse(attackerForward);
         TakeDamage(amount);
     }
 
     public void TakeDamage(int amount)
     {
+        if (currentHealth <= 0) return;
+
         if (invulnerable && amount < 100) return;   //if damage is too big (deathfloor) invulnebility dont work
         _currentHealth = Mathf.Clamp(_currentHealth - amount, 0, maxHealth);
         if(_currentHealth == 0)
@@ -59,6 +72,10 @@ public class StatusScript : MonoBehaviour
         }
         else
         {
+            if (!impactSFX.isPlaying)
+            {
+                impactSFX.Play();
+            }
             impactFX.Play();
         }
     }
@@ -70,9 +87,15 @@ public class StatusScript : MonoBehaviour
 
     private void Death()
     {
+        if (!deathSFX.isPlaying)
+        {
+            deathSFX.Play();
+        }
+
         deathFX.transform.parent = null;
         deathFX.Play();
         Destroy(deathFX.gameObject, timeToDestroyFX);
+        _coll.enabled = false;
 
         if (gameObject.layer == 9)
         {
@@ -85,6 +108,7 @@ public class StatusScript : MonoBehaviour
         {
             FindObjectOfType<HUDManager>().GameOver();
             _controller.GetComponent<Rigidbody>().isKinematic = true;
+            _controller.enabled = false;
         }
     }
 
@@ -93,6 +117,7 @@ public class StatusScript : MonoBehaviour
         invulnerable= true;
         invulnerableTimer = time;
         invulnerableFX.Play();
+        invulnerableSFX.Play();
     }
 }
 

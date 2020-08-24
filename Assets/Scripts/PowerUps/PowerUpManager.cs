@@ -66,7 +66,7 @@ public class PowerUpManager : MonoBehaviour
                 }
             case PowerUpID.Speed:
                 {
-                    _controller.IncreaseSpeed(0.5f, 10);
+                    _controller.IncreaseSpeed(0.2f, 10);
                     break;
                 }
         }
